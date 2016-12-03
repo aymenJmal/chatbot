@@ -4,11 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 
-import { sendTextMessage } from './utils';
+import { getPages, sendTextMessage } from './utils';
 
 const app = express();
-
-
 app.set('port', (process.env.PORT || 5000));
 
 // Process application/x-www-form-urlencoded
@@ -38,9 +36,10 @@ app.post('/webhook/', function (req, res) {
         const SENDER_ID = event.sender.id;
         if (event.message && event.message.text) {
             let text = event.message.text;
-            sendTextMessage(SENDER_ID, "PAGE_ID: " + PAGE_ID);
-            sendTextMessage(SENDER_ID, "SENDER_ID: " + SENDER_ID);
-            sendTextMessage(SENDER_ID, "TEXT: " + text.substring(0, 200));
+            sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
+            sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + getPage(PAGE_ID).name);
+            sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
+            sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
         }
     }
     res.sendStatus(200)
