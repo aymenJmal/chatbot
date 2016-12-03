@@ -1,3 +1,5 @@
+const request = require('request');
+
 let pages = {};
 pages['test'] = {
   token: 'test',
