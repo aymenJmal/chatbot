@@ -35,10 +35,11 @@ app.post('/webhook/', function (req, res) {
         const SENDER_ID = event.sender.id;
         if (event.message && event.message.text) {
             let text = event.message.text;
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
+            /*tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
             tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
             tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
+            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));*/
+            tools.sendGenericMessage(PAGE_ID, SENDER_ID);
         }
     }
     res.sendStatus(200)
