@@ -27,13 +27,16 @@ app.get('/webhook/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
+	const PAGE_ID = req.body.entry[0].id;
+    const messaging_events = req.body.entry[0].messaging;
     for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
+        const event = req.body.entry[0].messaging[i];
+        const SENDER_ID = event.sender.id;
         if (event.message && event.message.text) {
-            let text = event.message.text
-            sendTextMessage(sender, "Text received, .echo: " + text.substring(0, 200))
+            let text = event.message.text;
+            sendTextMessage(SENDER_ID, "PAGE_ID: " + PAGE_ID);
+            sendTextMessage(SENDER_ID, "SENDER_ID: " + SENDER_ID);
+            sendTextMessage(SENDER_ID, "TEXT: " + text.substring(0, 200));
         }
     }
     res.sendStatus(200)
