@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 
-import { getPages, sendTextMessage } from './utils';
+var tools = require('./utils');
 
 const app = express();
 app.set('port', (process.env.PORT || 5000));
@@ -36,15 +36,14 @@ app.post('/webhook/', function (req, res) {
         const SENDER_ID = event.sender.id;
         if (event.message && event.message.text) {
             let text = event.message.text;
-            sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
-            sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + getPage(PAGE_ID).name);
-            sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
-            sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
+            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
+            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
+            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
+            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
         }
     }
     res.sendStatus(200)
 })
-const token = "FB_TOKEN";
 
 // Spin up the server
 app.listen(app.get('port'), function() {
