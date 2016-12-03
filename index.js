@@ -1,29 +1,33 @@
 'use strict'
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const request = require('request');
 
-app.set('port', (process.env.PORT || 5000))
+import { sendTextMessage } from './utils';
+
+const app = express();
+
+
+app.set('port', (process.env.PORT || 5000));
 
 // Process application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: false}));
 
 // Process application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
+    res.send('Hello world, I am a chat bot');
 })
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-        res.send(req.query['hub.challenge'])
+        res.send(req.query['hub.challenge']);
     }
-    res.send('Error, wrong token')
+    res.send('Error, wrong token');
 })
 
 app.post('/webhook/', function (req, res) {
@@ -42,25 +46,6 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 const token = "FB_TOKEN";
-
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
 
 // Spin up the server
 app.listen(app.get('port'), function() {
