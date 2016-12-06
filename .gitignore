@@ -3,4 +3,4 @@ token
 node_modules
 add_get_started_button.sh
 remove_get_started_button.sh
-
+.idea
