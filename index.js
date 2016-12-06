@@ -27,6 +27,11 @@ app.get('/webhook/', function (req, res) {
   res.send('Error, wrong token');
 });
 
+
+function sendWelcomeMsg(page_id, sender_id) {
+  tools.sendTextMessage(page_id, sender_id, 'Bienvenue sur notre page');
+}
+
 app.post('/webhook/', function (req, res) {
   const PAGE_ID = req.body.entry[0].id;
   const messaging_events = req.body.entry[0].messaging;
@@ -40,6 +45,8 @@ app.post('/webhook/', function (req, res) {
       tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
       tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
       tools.sendGenericMessage(PAGE_ID, SENDER_ID);
+    } else {
+      sendWelcomeMsg(PAGE_ID, SENDER_ID);
     }
   }
   res.sendStatus(200)
