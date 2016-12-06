@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-var tools = require('./utils');
+let tools = require('./utils');
 
 const app = express();
 app.set('port', (process.env.PORT || 5000));
@@ -16,36 +16,36 @@ app.use(bodyParser.json());
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot');
-})
+  res.send('Hello world, I am a chat bot');
+});
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-        res.send(req.query['hub.challenge']);
-    }
-    res.send('Error, wrong token');
-})
+  if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+    res.send(req.query['hub.challenge']);
+  }
+  res.send('Error, wrong token');
+});
 
 app.post('/webhook/', function (req, res) {
-	const PAGE_ID = req.body.entry[0].id;
-    const messaging_events = req.body.entry[0].messaging;
-    for (let i = 0; i < messaging_events.length; i++) {
-        const event = req.body.entry[0].messaging[i];
-        const SENDER_ID = event.sender.id;
-        if (event.message && event.message.text) {
-            let text = event.message.text;
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
-            tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
-            tools.sendGenericMessage(PAGE_ID, SENDER_ID);
-        }
+  const PAGE_ID = req.body.entry[0].id;
+  const messaging_events = req.body.entry[0].messaging;
+  for (let i = 0; i < messaging_events.length; i++) {
+    const event = req.body.entry[0].messaging[i];
+    const SENDER_ID = event.sender.id;
+    if (event.message && event.message.text) {
+      let text = event.message.text;
+      tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
+      tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
+      tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
+      tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
+      tools.sendGenericMessage(PAGE_ID, SENDER_ID);
     }
-    res.sendStatus(200)
-})
+  }
+  res.sendStatus(200)
+});
 
 // Spin up the server
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
-})
+app.listen(app.get('port'), function () {
+  console.log('running on port', app.get('port'));
+});
