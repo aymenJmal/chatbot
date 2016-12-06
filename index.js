@@ -45,6 +45,9 @@ app.post('/webhook/', function (req, res) {
       tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
       tools.sendTextMessage(PAGE_ID, SENDER_ID, 'TEXT: ' + text.substring(0, 200));
       tools.sendGenericMessage(PAGE_ID, SENDER_ID);
+    } else {
+      tools.sendTextMessage(PAGE_ID, SENDER_ID, 'messaging_events ' + JSON.stringify(messaging_events));
+      break;
     }
   }
   res.sendStatus(200)
