@@ -40,7 +40,6 @@ app.post('/webhook/', function (req, res) {
     const event = req.body.entry[0].messaging[i];
     const SENDER_ID = event.sender.id;
     const post_back =  req.body.entry[0].messaging[i];
-    tools.sendTextMessage(PAGE_ID, SENDER_ID, 'post_back: ' + post_back);
     if (event.message && event.message.text) {
       if(post_back.payload == "USER_DEFINED_PAYLOAD")
         sendWelcomeMsg(PAGE_ID, SENDER_ID);
