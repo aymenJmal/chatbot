@@ -1,14 +1,10 @@
 const request = require('request');
 
 let pages = {};
-pages['513774525497834'] = {
-  token: 'EAAE5KK8ajkQBAA5KEgv5wP0EeZAZAhm6YWHmZA2m1zzCwmP2sNENFqrzAx7LMArB5A55YNw2csdbBw4aySHEeoTtzym5k2ZCIOU8RDc7tVbfRBiHZC1l04mEfMZAlJOUDMZCSDkJLG0nU5ciEe76SExWLzzQ4nCzp3Rog0E9f7xNgZDZD',
-  name: 'IpponLab'
+pages['test'] = {
+  token: 'test',
+  name: 'test'
 };
-pages['493246800721372'] = {
-  token: 'EAAE5KK8ajkQBAF2JEqfuIBMZCJ8QJGlCh0aBvw4qT76V0uCBmagxs8dXefd7puvWYSrouCgWKmY70ZBhfdtKxauWgsAm7p1MOEcCv346HkEiClKhz6CIUEdZCEGDxI1hi9vWJaW7oBuROUNIZA3XsY44JnOoZBMHJdmqLCf0xmQZDZD',
-  name: 'UTOF'
-}
 
 module.exports = {
   getPage: function (page_id) {
