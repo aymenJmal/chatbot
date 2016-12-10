@@ -30,7 +30,7 @@ app.get('/webhook/', function (req, res) {
 
 
 function sendWelcomeMsg(page_id, sender_id) {
-  tools.sendTextMessage(page_id, sender_id, 'Bienvenue sur notre page');
+  tools.sendTextMessage(page_id, sender_id, 'Bienvenue sur notre page facebook');
 }
 
 app.post('/webhook/', function (req, res) {
