@@ -39,12 +39,9 @@ app.post('/webhook/', function (req, res) {
   for (let i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
     const SENDER_ID = event.sender.id;
-    const post_back =  req.body.entry[0].messaging[i];
+    // si on recoit un message du user
     if (event.message && event.message.text) {
-      if(post_back.payload == "USER_DEFINED_PAYLOAD")
-        sendWelcomeMsg(PAGE_ID, SENDER_ID);
-      else {
-        let text = event.message.text;
+      let text = event.message.text;
         tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
         tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
         tools.sendTextMessage(PAGE_ID, SENDER_ID, 'SENDER_ID: ' + SENDER_ID);
@@ -52,6 +49,9 @@ app.post('/webhook/', function (req, res) {
         tools.sendGenericMessage(PAGE_ID, SENDER_ID);
 
       }
+    // si on recoit le getStarted button
+    if(event.postback)
+      sendWelcomeMsg(PAGE_ID, SENDER_ID);
 
     }
   }
