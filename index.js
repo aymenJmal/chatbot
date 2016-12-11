@@ -34,7 +34,8 @@ function sendWelcomeMsg(page_id, sender_id) {
 }
 
 app.post('/webhook/', function (req, res) {
-  const PAGE_ID = req.body.entry[0].id;
+  tools.sendTextMessage("TEST", "TEST", 'REQ: ' + eq.body.entry[0]);
+const PAGE_ID = req.body.entry[0].id;
   const messaging_events = req.body.entry[0].messaging;
   for (let i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
@@ -50,7 +51,7 @@ app.post('/webhook/', function (req, res) {
 
       }
     // si on recoit le getStarted button
-    if(event.postback)
+    if(event.postback){
       sendWelcomeMsg(PAGE_ID, SENDER_ID);
 
     }
