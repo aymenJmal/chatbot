@@ -34,13 +34,13 @@ function sendWelcomeMsg(page_id, sender_id) {
 }
 
 app.post('/webhook/', function (req, res) {
-  const PAGE_ID = req.body.entry[0].id;
   const messaging_events = req.body.entry[0].messaging;
   for (let i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
-    const SENDER_ID = event.sender.id;
-    // si on recoit un message du user
-    if (event.message && event.message.text) {
+    const SENDER_ID = event.sender.id; // the facebook ID of the person sending you the message
+    const PAGE_ID = event.recipient.id; // the recipient's ID, which should be your page's facebook ID
+
+    if (event.message && event.message.text) {  // someone sent us a not empty message
       let text = event.message.text;
         tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_ID: ' + PAGE_ID);
         tools.sendTextMessage(PAGE_ID, SENDER_ID, 'PAGE_NAME: ' + tools.getPage(PAGE_ID).name);
@@ -49,10 +49,12 @@ app.post('/webhook/', function (req, res) {
         tools.sendGenericMessage(PAGE_ID, SENDER_ID);
 
       }
-    // si on recoit le getStarted button
-    if(event.postback){
-      sendWelcomeMsg(PAGE_ID, SENDER_ID);
 
+    if(event.delivery){ //delivery confirmation
+      continue;
+    }
+    if(event.postback){ // user clicked/tapped "postback or GetStarted" button in earlier message
+      sendWelcomeMsg(PAGE_ID, SENDER_ID);
     }
   }
   res.sendStatus(200)
